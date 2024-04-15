@@ -78,7 +78,7 @@ class IndexDBTableWrapper<T> {
         const res = e.target!.result;
         if(res) {
           datas[res.key as K] = res.value;
-            res.continue();
+          res.continue();
         }else{
           resolve(datas);
         }
@@ -87,7 +87,7 @@ class IndexDBTableWrapper<T> {
   }
 }
 
-class IndexedDBWrapper {
+class IndexedDBWrapper<T> {
   private name: string;
   private objectStoreNames: Array<string>;
   private version: number;
@@ -115,16 +115,16 @@ class IndexedDBWrapper {
     });
   }
 
-  getTableTransaction<T>(tableName: string){
+  getTableTransaction<K extends keyof T & string>(tableName: K){
     if(this.db==null) throw('Please call the open method first to open the indexDB database');
-    return new IndexDBTableWrapper<T>(this.db,tableName);
+    return new IndexDBTableWrapper<T[K]>(this.db,tableName);
   }
 }
 
-const dbWrapper = new IndexedDBWrapper('myDatabase',['test','item']);
+const dbWrapper = new IndexedDBWrapper<MyTable>('myDatabase',['test','item','objectName']);
 // Open the database
 dbWrapper.open().then(() => {
-  const testTable = dbWrapper.getTableTransaction<InterfaceData>('test')
+  const testTable = dbWrapper.getTableTransaction('objectName')
   // Put some data
   testTable.put('studioId', { foo: 'bar' }).then(() => {
     // Get the data
@@ -175,6 +175,12 @@ dbWrapper.open().then(() => {
   //   });
   // });
 });
+
+interface MyTable {
+  test: InterfaceData
+  item: unknown;
+  objectName: InterfaceData;
+}
 
 interface InterfaceData {
   studioId:        { foo: string};
