@@ -126,7 +126,7 @@ const dbWrapper = new IndexedDBWrapper<MyTable>('myDatabase',['test','item','obj
 dbWrapper.open().then(() => {
   const testTable = dbWrapper.getTableTransaction('objectName')
   // Put some data
-  testTable.put('studioId', { foo: 'bar' }).then(() => {
+  testTable.put('studioId', { foo: 'bar2' }).then(() => {
     // Get the data
     testTable.get('studioId').then(value => {
         const data = value;
