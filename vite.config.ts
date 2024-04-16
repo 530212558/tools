@@ -10,7 +10,8 @@ export default defineConfig({
     https: {
       key: fs.readFileSync("./ca/dev.koolearn.com-key.pem"),
       cert: fs.readFileSync("./ca/dev.koolearn.com.pem"),
-  },
+    },
+    host: '0.0.0.0',
   },
   plugins: [
     react(),
