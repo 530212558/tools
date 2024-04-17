@@ -1,6 +1,22 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      // 判断浏览器是否支持 Service Worker
+      if ('serviceWorker' in navigator) {
+        // 在 load 事件触发后注册 Service Worker，确保 Service Worker 的注册不会影响首屏速度
+        window.addEventListener('load', function () {
+          // 注册 Service Worker
+          navigator.serviceWorker.register('./src/tools/serviceWorker.js?v=223').then(function (registration) {
+            // 注册成功
+            console.log('ServiceWorker registration successful with scope: ', registration.scope)
+          }).catch(function (err) {
+            // 注册失败 :(
+            console.warn('ServiceWorker registration failed: ', err)
+          })
+        })
+      }
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,5 +25,6 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
   </body>
 </html>

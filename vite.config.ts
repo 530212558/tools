@@ -7,10 +7,10 @@ import fs from 'fs';
 export default defineConfig({
   server: {
     // https: true   // 需要开启https服务
-    https: {
-      key: fs.readFileSync("./ca/dev.koolearn.com-key.pem"),
-      cert: fs.readFileSync("./ca/dev.koolearn.com.pem"),
-    },
+    // https: {
+    //   key: fs.readFileSync("./ca/dev.koolearn.com-key.pem"),
+    //   cert: fs.readFileSync("./ca/dev.koolearn.com.pem"),
+    // },
     host: '0.0.0.0',
   },
   plugins: [
